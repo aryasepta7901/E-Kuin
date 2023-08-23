@@ -1,0 +1,21 @@
+@extends('layouts.backEnd.main')
+
+@section('content')
+    <div class="col-lg-12">
+        <div class="card">
+            {{-- <div class="card-header">
+                <p class="text-center">Selamat Datang Kembali {{ auth()->user()->name }}
+                    ({{ auth()->user()->satker->nama_satker }})
+                </p>
+
+
+            </div> --}}
+            <div class="card-body">
+                <div class="row justify-content-around">
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+@endsection
