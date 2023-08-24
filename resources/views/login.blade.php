@@ -55,7 +55,7 @@
                     <form action="/login" method="post">
                         @csrf
                         <div class="input-group mb-3">
-                            <input type="nip" class="form-control" placeholder="Nomor Induk Pegawai" name="nip">
+                            <input type="id" class="form-control" placeholder="Nomor Induk Pegawai" name="id">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>

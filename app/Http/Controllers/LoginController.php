@@ -2,13 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+    // Login Manual
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate(
+            [
+                'id' => 'required',
+                'password' => 'required',
+
+            ],
+            [
+                'id.required' => 'NIP Wajib di Isi',
+                'password.required' => 'Password Wajib di Isi',
+            ]
+        );
+        // $findUser = User::where('id', strval($request->nip))->first();
+
+        if (Auth::attempt($credentials)) {
+
+            // if ($findUser && Hash::check($request->password, $findUser->password)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/kontrak');
+        }
+        // Jika gagal
+        return back()->with('loginError', 'Login Gagal!');
+    }
     public function logout(Request $request)
     {
         Auth::logout();
@@ -17,30 +40,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
-    }
-
-    // Login Manual
-    public function login(Request $request)
-    {
-        $request->validate(
-            [
-                'nip' => 'required',
-                'password' => 'required',
-
-            ],
-            [
-                'required' => ':Attribute Wajib di Isi',
-            ]
-        );
-        $findUser = User::where('id', strval($request->nip))->first();
-        if ($findUser && Hash::check($request->password, $findUser->password)) {
-
-            Auth::login($findUser);
-
-            return redirect()->intended('/kontrak');
-        }
-        // Jika gagal
-        return back()->with('loginError', 'Login Gagal!');
+        return redirect('/');
     }
 }

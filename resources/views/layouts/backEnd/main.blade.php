@@ -61,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="wrapper">
         <!-- Preloader -->
         <div id="my-element" class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('img/bps.svg') }}" alt="AdminLTELogo" height="100"
+            <img class="animation__shake" src="{{ asset('img/e-kuin-logo.png') }}" alt="AdminLTELogo" height="100"
                 width="100">
         </div>
 

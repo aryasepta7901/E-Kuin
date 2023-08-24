@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', function () {
     return view('login');
 })->name('login')->middleware('guest');
-Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('login', [LoginController::class, 'authenticate'])->name('login');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard
@@ -42,8 +42,7 @@ Route::resource('/jadwal', JadwalController::class)->middleware('auth');
 Route::resource('/users', UserController::class)->middleware('auth');
 
 
-
-
+// landingPage
 Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest');
+    return view('landingPage');
+})->name('landingPage')->middleware('guest');

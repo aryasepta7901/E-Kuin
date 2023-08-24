@@ -16,6 +16,6 @@ class UserPPK extends Model
     }
     public function user()
     {
-        return $this->hasMany(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class,  'user_id');
     }
 }

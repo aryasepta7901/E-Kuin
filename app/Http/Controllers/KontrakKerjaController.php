@@ -518,6 +518,7 @@ class KontrakKerjaController extends Controller
      */
     public function destroy(Kontrak $kontrak)
     {
-        //
+        Kontrak::destroy($kontrak->id);
+        return redirect()->back()->with('success', 'Kontrak Berhasil di Hapus');
     }
 }
