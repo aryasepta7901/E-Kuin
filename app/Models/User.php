@@ -30,4 +30,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserPPK::class, 'id', 'user_id');
     }
+    public function satker()
+    {
+        return $this->belongsTo(Satker::class, 'satker_id');
+    }
 }

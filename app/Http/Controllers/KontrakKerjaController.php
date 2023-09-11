@@ -26,14 +26,14 @@ class KontrakKerjaController extends Controller
      */
     public function index()
     {
-
+        $satker_id = auth()->user()->satker_id;
         return view('kontrak.index', [
             'title' => 'kontrak Kerja',
-            'kontrak' => Kontrak::all(),
+            'kontrak' => Kontrak::where('satker_id', $satker_id)->get(),
 
-            'pbj' => User::where('role', 'PBJ')->get(),
+            'pbj' => User::where('role', 'PBJ')->where('satker_id', $satker_id)->get(),
 
-            'ppk' => User::where('role', 'PPK')->get(),
+            'ppk' => User::where('role', 'PPK')->where('satker_id', $satker_id)->get(),
 
         ]);
     }
@@ -94,6 +94,7 @@ class KontrakKerjaController extends Controller
             'id_vendor' => $vendor->id,
             'waktu_mulai' => $mulai,
             'waktu_selesai' => $selesai,
+            'satker_id' => auth()->user()->satker_id,
 
         ];
         $kontrak = Kontrak::create($data);
@@ -115,12 +116,6 @@ class KontrakKerjaController extends Controller
             ]
         );
 
-        // userPPK
-        $ppk = UserPPK::where('user_id', $request->ppk)->first();
-        if (!$ppk) {
-            // jika tidak ada maka create
-            UserPPK::create(['user_id' => $request->ppk]);
-        }
 
 
 
@@ -135,6 +130,7 @@ class KontrakKerjaController extends Controller
      */
     public function show(Kontrak $kontrak)
     {
+        $satker_id = auth()->user()->satker_id;
 
         return view('kontrak.show', [
             'master' => 'Kontrak Kerja',
@@ -147,8 +143,8 @@ class KontrakKerjaController extends Controller
             'kategoriJadwal1' => KategoriJadwal::skip(0)->take(6)->get(),
             'kategoriJadwal2' => KategoriJadwal::skip(6)->take(6)->get(),
             'kategoriJadwal3' => KategoriJadwal::skip(12)->take(6)->get(),
-            'pbj' => User::where('role', 'PBJ')->get(),
-            'ppk' => User::where('role', 'PPK')->get(),
+            'pbj' => User::where('role', 'PBJ')->where('satker_id', $satker_id)->get(),
+            'ppk' => User::where('role', 'PPK')->where('satker_id', $satker_id)->get(),
             'jenis' => JenisKontrak::all(),
             'denda' => DendaKontrak::all(),
             'bank' => Bank::all(),
@@ -313,10 +309,7 @@ class KontrakKerjaController extends Controller
                 return 'Angka terlalu besar untuk diubah.';
             }
         }
-        function italic($text)
-        {
-            return "<em>{$text}</em>";
-        }
+
         // Script PhpWord
         // Creating the new document...
         $phpWord = new TemplateProcessor('kuitansi.docx');
@@ -478,6 +471,18 @@ class KontrakKerjaController extends Controller
             'bank' => $kontrak->vendor->bank->nama_bank,
 
         ]);
+        // Informasi BPS
+        $phpWord->setValues([
+            'Nama_Satker' => strtoupper($kontrak->satker->nama_satker),
+            'nama_satker' => $kontrak->satker->nama_satker,
+            'alamat' => $kontrak->satker->alamat,
+            'no_telp' => $kontrak->satker->no_telp,
+            'fax' => $kontrak->satker->fax,
+            'web' => $kontrak->satker->web,
+            'email' => $kontrak->satker->email,
+
+
+        ]);
         $dataBarang = [];
         $noBarang = 1;
         foreach ($barang as $b) {
@@ -508,10 +513,9 @@ class KontrakKerjaController extends Controller
 
 
         // Simpan hasil proses ke file Word sementara   
-        // $fileName = 'Kuitansi_' . $request->satker . '_Tahap_' . $tahap . '.docx';
-        // $fileName = 'Kuitansi_' . $kontrak->pekerjaan . '.docx';
-        $phpWord->saveAs('kuitansi1.docx');
-        return response()->download('kuitansi1.docx')->deleteFileAfterSend(true);
+        $fileName = 'Kuitansi-' . $kontrak->satker->nama_satker . '-' . $kontrak->pekerjaan . '.docx';
+        $phpWord->saveAs($fileName);
+        return response()->download($fileName)->deleteFileAfterSend(true);
     }
 
     /**

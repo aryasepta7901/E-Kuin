@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->char('id', 18)->primary()->unique(); //nip
-            $table->string('name');
-            $table->string('password');
-            $table->string('role');
-
-            $table->char('satker_id', 4);
-            $table->foreign('satker_id')->references('id')->on('satker')->onDelete('cascade');
-
+        Schema::create('satker', function (Blueprint $table) {
+            $table->char('id')->primary()->unique();
+            $table->string('nama_satker');
+            $table->string('alamat');
+            $table->string('no_telp', 30);
+            $table->string('fax', 15);
+            $table->string('web');
+            $table->string('email');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('satker');
     }
 };

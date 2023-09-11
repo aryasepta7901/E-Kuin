@@ -34,7 +34,10 @@ return new class extends Migration
             $table->double('total_penawaran', 8)->nullable();
             $table->double('total_negosiasi', 8)->nullable();
             $table->double('total_selisih', 8)->nullable();
+            $table->char('satker_id', 4);
+            $table->foreign('satker_id')->references('id')->on('satker')->onDelete('cascade');
             $table->boolean('status')->default(0);
+
 
 
 

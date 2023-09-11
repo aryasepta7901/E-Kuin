@@ -15,12 +15,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        $satker_id = auth()->user()->satker_id;
+
         return view('users', [
-            'title' => 'Data Pengguna',
-            'pbj' => User::where('role', 'pbj')->get(),
-            'ppk' => User::where('role', 'ppk')->get(),
-            'bp' => User::where('role', 'BP')->first(),
-            'kpa' => User::where('role', 'KPA')->first(),
+            'title' => 'Data Pengguna BPS ' . auth()->user()->satker->nama_satker,
+            'pbj' => User::where('role', 'pbj')->where('satker_id', $satker_id)->get(),
+            'ppk' => User::where('role', 'ppk')->where('satker_id', $satker_id)->get(),
+            'bp' => User::where('role', 'BP')->where('satker_id', $satker_id)->first(),
+            'kpa' => User::where('role', 'KPA')->where('satker_id', $satker_id)->first(),
 
         ]);
     }
@@ -57,11 +59,14 @@ class UserController extends Controller
             ]
         );
 
+        $satker_id = auth()->user()->satker_id;
+
         $data = [
             'id' => $request->nip,
             'name' => $request->nama,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'role' => 'PBJ',
+            'satker_id' => $satker_id,
 
         ];
         User::create($data);

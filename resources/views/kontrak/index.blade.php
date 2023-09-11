@@ -26,6 +26,7 @@
 
         <div class="card">
             <div class="card-header d-flex justify-content-between">
+                <b>BPS {{ auth()->user()->satker->nama_satker }}</b>
 
                 <button class="btn btn-primary ml-auto" data-toggle="modal" data-target="#tambah"><i class="fa fa-plus">
                     </i> Tambah

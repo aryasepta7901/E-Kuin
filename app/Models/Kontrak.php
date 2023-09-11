@@ -37,4 +37,8 @@ class Kontrak extends Model
     {
         return $this->belongsTo(DendaKontrak::class, 'denda_id');
     }
+    public function satker()
+    {
+        return $this->belongsTo(Satker::class, 'satker_id');
+    }
 }
