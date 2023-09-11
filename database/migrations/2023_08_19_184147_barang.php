@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('spesifikasi');
             $table->string('satuan', 10);
             $table->double('volume', 4);
+            $table->double('harga_hps', 8);
+            $table->double('total_harga_hps', 8);
             $table->double('harga_tawar', 8);
             $table->double('total_harga_tawar', 8);
             $table->double('harga_nego', 8);

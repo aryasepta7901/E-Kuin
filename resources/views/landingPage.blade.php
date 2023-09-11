@@ -46,7 +46,7 @@
 
             <a href="" class="logo d-flex align-items-center">
                 <img src="{{ asset('landingPage') }}/img/bps.png" alt="">
-                <span>Badan Pusat Statistik</span>
+                <span>E-Kuin</span>
             </a>
 
             <nav id="navbar" class="navbar">

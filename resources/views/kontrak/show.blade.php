@@ -279,6 +279,8 @@
                             <th class="text-center">Spesifikasi</th>
                             <th class="text-center">Volume</th>
                             <th class="text-center">Satuan</th>
+                            <th class="text-center">HPS</th>
+                            <th class="text-center">Subtotal HPS</th>
                             <th class="text-center">Harga Penawaran</th>
                             <th class="text-center">Subtotal Penawaran</th>
                             <th class="text-center">Harga Negosiasi</th>
@@ -297,6 +299,12 @@
                                 <td class="text-center"><button class="badge badge-info">{{ $value->volume }}</button>
                                 </td>
                                 <td>{{ $value->satuan }}</td>
+                                <td class="text-center"><button
+                                        class="badge badge-sm badge-info">Rp{{ number_format($value->harga_hps, 2, ',', '.') }}</button>
+                                </td>
+                                <td class="text-center"><button
+                                        class="badge badge-sm badge-info">Rp{{ number_format($value->total_harga_hps, 2, ',', '.') }}</button>
+                                </td>
                                 <td class="text-center"><button
                                         class="badge badge-sm badge-info">Rp{{ number_format($value->harga_tawar, 2, ',', '.') }}</button>
                                 </td>
@@ -326,6 +334,10 @@
                     </tbody>
                     <tfoot>
                         <th colspan="5" class="text-center">Total</th>
+                        <th class="bg-dark"></th>
+                        <th class="text-center"><button
+                                class="badge badge-sm badge-info">Rp{{ number_format($kontrak->total_hps, 2, ',', '.') }}</button>
+                        </th>
                         <th class="bg-dark"></th>
                         <th class="text-center"><button
                                 class="badge badge-sm badge-info">Rp{{ number_format($kontrak->total_penawaran, 2, ',', '.') }}</button>
@@ -935,6 +947,17 @@
 
                         </div>
                         <hr>
+                        <div class="form-group">
+                            <label for="harga_hps">Harga Perkiraan Sendiri (HPS)</label>
+                            <input type="number" value="{{ old('harga_hps') }}"
+                                class="form-control @error('harga_hps') is-invalid  @enderror" name="harga_hps">
+                            </input>
+                            @error('harga_hps')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -1048,6 +1071,17 @@
 
                             </div>
                             <hr>
+                            <div class="form-group">
+                                <label for="harga_hps">Harga Perkiraan Sendiri (HPS)</label>
+                                <input type="number" value="{{ old('harga_hps', $value->harga_hps) }}"
+                                    class="form-control @error('harga_hps') is-invalid  @enderror" name="harga_hps">
+                                </input>
+                                @error('harga_hps')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">

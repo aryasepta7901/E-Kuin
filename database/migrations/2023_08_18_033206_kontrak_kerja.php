@@ -30,6 +30,7 @@ return new class extends Migration
             $table->char('pbj', 18)->nullable();
             $table->char('ppk', 18)->nullable();
 
+            $table->double('total_hps', 8)->nullable();
             $table->double('total_penawaran', 8)->nullable();
             $table->double('total_negosiasi', 8)->nullable();
             $table->double('total_selisih', 8)->nullable();

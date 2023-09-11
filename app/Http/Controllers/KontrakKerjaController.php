@@ -338,6 +338,8 @@ class KontrakKerjaController extends Controller
         $phpWord->setValues([
             'PEKERJAAN' => strtoupper($kontrak->pekerjaan),
             'pekerjaan' => $kontrak->pekerjaan,
+            'total_hps' => number_format($kontrak->total_hps, 2, ',', '.'),
+            'textTotal_hps' => terbilang($kontrak->total_hps),
             'total_nego' => number_format($kontrak->total_negosiasi, 2, ',', '.'),
             'ppn' => number_format(round((11 / 111) * $kontrak->total_negosiasi), 2, ',', '.'),
             'pph' => number_format(round((1.5 / 111) * $kontrak->total_negosiasi), 2, ',', '.'),
@@ -486,6 +488,8 @@ class KontrakKerjaController extends Controller
                 'spesifikasi' => $b->spesifikasi,
                 'volume' => $b->volume,
                 'satuan' => $b->satuan,
+                'harga_hps' => number_format($b->harga_hps, 2, ',', '.'),
+                'subtotal_hps' => number_format($b->total_harga_hps, 2, ',', '.'),
                 'harga_tawar' => number_format($b->harga_tawar, 2, ',', '.'),
                 'subtotal_tawar' => number_format($b->total_harga_tawar, 2, ',', '.'),
                 'harga_nego' => number_format($b->harga_nego, 2, ',', '.'),

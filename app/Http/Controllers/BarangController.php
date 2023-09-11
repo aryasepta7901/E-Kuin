@@ -43,27 +43,32 @@ class BarangController extends Controller
                 'spesifikasi'  => 'required',
                 'satuan'  => 'required',
                 'volume'  => 'required',
-                'harga_tawar'  => 'required',
-                'harga_nego'  => 'required',
+                'harga_hps'  => 'required',
+                'harga_tawar'  => 'required|lte:harga_hps',
+                'harga_nego'  => 'required|lte:harga_tawar',
 
 
             ],
             [
                 'required' => ':attribute Wajib di Isi',
+                'lte' => ' :attribute Harus lebih kecil atau sama dengan  dari :value.'
             ]
         );
 
         // Barang
-        $harga_tawar = $request->harga_tawar;
         $volume = $request->volume;
+        $harga_hps = $request->harga_hps;
+        $harga_tawar = $request->harga_tawar;
         $harga_nego = $request->harga_nego;
         $data = [
             'nama' => $request->nama,
             'spesifikasi' => $request->spesifikasi,
             'satuan' => $request->satuan,
             'volume' => $volume,
+            'harga_hps' => $harga_hps,
             'harga_tawar' => $harga_tawar,
             'harga_nego' => $harga_nego,
+            'total_harga_hps' => $harga_hps * $volume,
             'total_harga_tawar' => $harga_tawar * $volume,
             'total_harga_nego' => $harga_nego * $volume,
             'selisih_nego' => ($harga_tawar * $volume) - ($harga_nego * $volume),
@@ -79,12 +84,14 @@ class BarangController extends Controller
         if ($barang == 0) {
             // Jika barang belum ada
             $data = [
+                'total_hps' => $data['total_harga_hps'],
                 'total_penawaran' => $data['total_harga_tawar'],
                 'total_negosiasi' => $data['total_harga_nego'],
                 'total_selisih' => $data['selisih_nego'],
             ];
         } else {
             $data = [
+                'total_hps' => $kontrak->total_hps + $data['total_harga_hps'],
                 'total_penawaran' => $kontrak->total_penawaran + $data['total_harga_tawar'],
                 'total_negosiasi' =>  $kontrak->total_negosiasi + $data['total_harga_nego'],
                 'total_selisih' => $kontrak->total_selisih + $data['selisih_nego'],
@@ -133,8 +140,9 @@ class BarangController extends Controller
                 'spesifikasi'  => 'required',
                 'satuan'  => 'required',
                 'volume'  => 'required',
-                'harga_tawar'  => 'required',
-                'harga_nego'  => 'required',
+                'harga_hps'  => 'required',
+                'harga_tawar'  => 'required|lte:harga_hps',
+                'harga_nego'  => 'required|lte:harga_tawar',
 
 
             ],
@@ -144,6 +152,7 @@ class BarangController extends Controller
         );
 
         // Barang
+        $harga_hps = $request->harga_hps;
         $harga_tawar = $request->harga_tawar;
         $volume = $request->volume;
         $harga_nego = $request->harga_nego;
@@ -152,8 +161,10 @@ class BarangController extends Controller
             'spesifikasi' => $request->spesifikasi,
             'satuan' => $request->satuan,
             'volume' => $volume,
+            'harga_hps' => $harga_hps,
             'harga_tawar' => $harga_tawar,
             'harga_nego' => $harga_nego,
+            'total_harga_hps' => $harga_hps * $volume,
             'total_harga_tawar' => $harga_tawar * $volume,
             'total_harga_nego' => $harga_nego * $volume,
             'selisih_nego' => ($harga_tawar * $volume) - ($harga_nego * $volume),
@@ -165,6 +176,7 @@ class BarangController extends Controller
 
         $data = [
             // Logic -> ambil total harga barang dikurangi dengan subtotal harga lama barang tersebut ditambah dengan subtotal harga baru barang tersebut
+            'total_hps' =>  $kontrak->total_hps - $barang->total_harga_hps  + $data['total_harga_hps'],
             'total_penawaran' =>  $kontrak->total_penawaran - $barang->total_harga_tawar  + $data['total_harga_tawar'],
             'total_negosiasi' =>  $kontrak->total_negosiasi - $barang->total_harga_nego + $data['total_harga_nego'],
             'total_selisih' =>  $kontrak->total_selisih - $barang->selisih_nego  + $data['selisih_nego'],
@@ -186,6 +198,7 @@ class BarangController extends Controller
         $kontrak = Kontrak::where('id', $barang->kontrak_id)->first();
 
         $data = [
+            'total_hps' =>  $kontrak->total_hps - $barang->total_harga_hps,
             'total_penawaran' =>  $kontrak->total_penawaran - $barang->total_harga_tawar,
             'total_negosiasi' =>  $kontrak->total_negosiasi - $barang->total_harga_nego,
             'total_selisih' =>  $kontrak->total_selisih - $barang->selisih_nego,
