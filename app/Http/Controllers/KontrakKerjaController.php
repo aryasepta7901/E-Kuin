@@ -47,6 +47,12 @@ class KontrakKerjaController extends Controller
     {
         //
     }
+    public function searchData(Request $request)
+    {
+        $inputData = $request->input('data');
+        $data = Vendor::where('penyedia_jasa', 'like', '%' . $inputData . '%')->limit(5)->get();
+        return response()->json($data);
+    }
 
     /**
      * Store a newly created resource in storage.

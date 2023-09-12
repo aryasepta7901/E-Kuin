@@ -141,6 +141,58 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
     <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#item").keyup(function() {
+                var keyword = $(this).val();
+
+
+                $.ajax({
+                    url: '/search',
+                    method: 'GET',
+                    data: {
+                        term: keyword
+                    },
+                    success: function(data) {
+                        $('#item-list').html('');
+                        var dropdown = $('<div class="dropdown "></div>');
+
+                        $.each(data, function(key, item) {
+                            if (item.penyedia_jasa.toLowerCase().indexOf(keyword
+                                    .toLowerCase()) !== -1) {
+                                var itemElement = $(
+                                    '<a class="dropdown-item ">' + item
+                                    .penyedia_jasa + '</a>');
+                                itemElement.click(function() {
+                                    $('#item').val(item.penyedia_jasa);
+                                    $("#item-list").removeClass(
+                                        'show'
+                                    ); // Menutup dropdown setelah item dipilih
+                                });
+                                dropdown.append(itemElement);
+                            }
+                        });
+                        $('#item-list').append(dropdown);
+                        $('#item-list').show();
+                    }
+                });
+            });
+
+            var itemInput = $("#item");
+            var itemList = $("#item-list");
+            $(document).on('click', '.dropdown-item', function() {
+                var selectedItem = $(this).text();
+                itemInput.val(selectedItem);
+                itemList.hide();
+            });
+
+
+
+
+
+        });
+    </script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('template/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->

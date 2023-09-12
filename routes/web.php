@@ -32,6 +32,8 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 // Kontrak Kerja
 Route::resource('/kontrak', KontrakKerjaController::class)->middleware('auth');
+Route::get('/search',  [KontrakKerjaController::class, 'searchData'])->name('searchData');
+
 // Generate Kuitansi
 Route::post('/kontrak/cetak', [KontrakKerjaController::class, 'cetak'])->middleware('auth');
 // Barang

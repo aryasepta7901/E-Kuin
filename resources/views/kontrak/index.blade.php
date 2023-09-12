@@ -110,8 +110,10 @@
 
                         <div class="form-group">
                             <label for="penyedia_jasa">Nama Penyedia</label>
-                            <input type="penyedia_jasa" class="form-control @error('penyedia_jasa') is-invalid  @enderror"
-                                id="penyedia_jasa" name="penyedia_jasa" value="{{ old('penyedia_jasa') }}">
+                            <input type="text" id="item"
+                                class="form-control @error('penyedia_jasa') is-invalid  @enderror" id="penyedia_jasa"
+                                name="penyedia_jasa" value="{{ old('penyedia_jasa') }}">
+                            <div id="item-list"></div>
                             @error('penyedia_jasa')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -221,4 +223,5 @@
             <!-- /.modal-dialog -->
         </div>
     @endforeach
+
 @endsection
