@@ -1176,45 +1176,47 @@
                             <div class="form-group">
                                 @php
                                     $waktu = $jadwal->where('kategori', $value->id)->first();
-                                    $waktuSebelumnya = $jadwal->where('kategori', $value->id - 1)->first();
-                                    $waktuSetelahnya = $jadwal->where('kategori', $value->id + 1)->first();
+                                    $waktuSebelumnya = $jadwal
+                                        ->where('kategori', '<', $value->id)
+                                        ->sortByDesc('kategori')
+                                        ->first();
+                                    
+                                    $waktuSetelahnya = $jadwal
+                                        ->where('kategori', '>', $value->id)
+                                        ->sortBy('kategori')
+                                        ->first();
                                 @endphp
                                 <label>Jadwal {{ $value->nama }}</label>
-
                                 @if ($waktu)
                                     {{-- Jika sudah ada didatabase --}}
-                                    <input type="date" class="form-control" name="date"
-                                        value="{{ date('Y-m-d', strtotime($waktu->waktu)) }}" min="2023-01-01"
-                                        max="2023-12-31" />
+                                    @if ($waktuSebelumnya && $waktuSetelahnya)
+                                        <input type="date" class="form-control" name="date"
+                                            value="{{ date('Y-m-d', strtotime($waktu->waktu)) }}"
+                                            min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}"
+                                            max="{{ date('Y-m-d', strtotime($waktuSetelahnya->waktu)) }}" />
+                                    @elseif($waktuSebelumnya && !$waktuSetelahnya)
+                                        <input type="date" class="form-control" name="date"
+                                            value="{{ date('Y-m-d', strtotime($waktu->waktu)) }}"
+                                            min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}"
+                                            max="" />
+                                    @elseif(!$waktuSebelumnya && $waktuSetelahnya)
+                                        <input type="date" class="form-control" name="date"
+                                            value="{{ date('Y-m-d', strtotime($waktu->waktu)) }}" min=""
+                                            max="{{ date('Y-m-d', strtotime($waktuSetelahnya->waktu)) }}" />
+                                    @endif
                                 @else
-                                    @if ($waktuSebelumnya && !$waktuSetelahnya)
-                                        @if ($value->id > 13)
-                                            <input type="date" class="form-control" name="date"
-                                                min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}" />
-                                        @else
-                                            <input type="date" class="form-control" name="date"
-                                                min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}"
-                                                max="{{ date('Y-m-d', strtotime($kontrak->waktu_mulai)) }}" />
-                                        @endif
-                                    @endif
-                                    @if ($waktuSetelahnya && !$waktuSebelumnya)
+                                    {{-- Jika belum ada didatabase --}}
+                                    @if ($waktuSebelumnya && $waktuSetelahnya)
                                         <input type="date" class="form-control" name="date"
-                                            max="{{ date('Y-m-d', strtotime($waktuSetelahnya->waktu)) }}"
-                                            min="" />
-                                    @endif
-                                    @if ($waktuSetelahnya && $waktuSebelumnya)
+                                            min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}"
+                                            max="{{ date('Y-m-d', strtotime($waktuSetelahnya->waktu)) }}" />
+                                    @elseif($waktuSebelumnya && !$waktuSetelahnya)
                                         <input type="date" class="form-control" name="date"
-                                            max="{{ date('Y-m-d', strtotime($waktuSetelahnya->waktu)) }}"
-                                            min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}" />
-                                    @endif
-                                    @if (!$waktuSetelahnya && !$waktuSebelumnya)
-                                        @if ($value->id > 13)
-                                            <input type="date" class="form-control" name="date"
-                                                min="{{ date('Y-m-d', strtotime($kontrak->waktu_selesai)) }}" />
-                                        @else
-                                            <input type="date" class="form-control" name="date"
-                                                max="{{ date('Y-m-d', strtotime($kontrak->waktu_mulai)) }}" />
-                                        @endif
+                                            min="{{ date('Y-m-d', strtotime($waktuSebelumnya->waktu)) }}"
+                                            max="" />
+                                    @elseif(!$waktuSebelumnya && $waktuSetelahnya)
+                                        <input type="date" class="form-control" name="date" min=""
+                                            max="{{ date('Y-m-d', strtotime($waktuSetelahnya->waktu)) }}" />
                                     @endif
                                 @endif
 
@@ -1238,7 +1240,7 @@
 
 
     {{-- Edit Jadwal contoh --}}
-    @foreach ($jadwal as $value)
+    {{-- @foreach ($jadwal as $value)
         <div class="modal fade" id="editJadwal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -1297,7 +1299,7 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-    @endforeach
+    @endforeach --}}
 
 
 
