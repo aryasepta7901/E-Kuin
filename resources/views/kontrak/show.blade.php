@@ -935,7 +935,7 @@
                                         </small>
                                     @enderror
                                     <select class="form-control select2bs4" name="satuan">
-                                        <option value="">Pilih Salah Satu </option>
+                                        {{-- <option value="">Pilih Salah Satu </option> --}}
                                         <option value="Buah">Buah</option>
                                         {{-- <option value="xxx">xxx</option>
                                         <option value="ccc">ccc</option> --}}

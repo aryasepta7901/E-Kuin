@@ -16,7 +16,7 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Seed the application's database. 
      *
      * @return void
      */
@@ -28,6 +28,34 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        // Kabupaten Bogor
+        $this->call(Satker3201Seeder::class);
+        $this->call(Satker3202Seeder::class);
+        $this->call(Satker3203Seeder::class);
+        $this->call(Satker3204Seeder::class);
+        $this->call(Satker3205Seeder::class);
+        $this->call(Satker3206Seeder::class);
+        $this->call(Satker3207Seeder::class);
+        $this->call(Satker3208Seeder::class);
+        $this->call(Satker3209Seeder::class);
+        $this->call(Satker3210Seeder::class);
+        $this->call(Satker3211Seeder::class);
+        $this->call(Satker3212Seeder::class);
+        $this->call(Satker3213Seeder::class);
+        $this->call(Satker3214Seeder::class);
+        $this->call(Satker3215Seeder::class);
+        $this->call(Satker3216Seeder::class);
+        $this->call(Satker3217Seeder::class);
+        $this->call(Satker3271Seeder::class);
+        $this->call(Satker3272Seeder::class);
+        $this->call(Satker3273Seeder::class);
+        $this->call(Satker3274Seeder::class);
+        $this->call(Satker3275Seeder::class);
+        $this->call(Satker3276Seeder::class);
+        $this->call(Satker3277Seeder::class);
+        $this->call(Satker3278Seeder::class);
+        $this->call(Satker3279Seeder::class);
+
 
         KategoriJadwal::insert([
             ['nama' => 'Formulir Permintaan'],
@@ -52,7 +80,8 @@ class DatabaseSeeder extends Seeder
         ]);
         JenisKontrak::insert([
             ['jenis' => 'Lumsum'],
-            ['jenis' => 'Harga Satuan dan Gabungan'],
+            ['jenis' => 'Harga Satuan'],
+            ['jenis' => 'Harga Gabungan'],
         ]);
         DendaKontrak::insert([
             ['denda' => '1 ‰ dari harga kontrak'],
@@ -68,66 +97,9 @@ class DatabaseSeeder extends Seeder
                 'web' => 'http://jabar.bps.go.id',
                 'email' => 'bps3200@bps.go.id',
             ],
-            [
-                'id' => '3201',
-                'nama_satker' => 'Kabupaten Bogor',
-                'alamat' => 'Jl. Bersih, Kompleks Perkantoran Pemkab Bogor, Cibinong',
-                'no_telp' => '(021) 8751070',
-                'fax' => '(022) 87913862',
-                'web' => 'https://bogorkab.bps.go.id/',
-                'email' => 'bps3201@bps.go.id',
-            ],
-            [
-                'id' => '3272',
-                'nama_satker' => 'Kota Sukabumi',
-                'alamat' => 'Jl. Selabintana No. 14 Sukabumi 43113',
-                'no_telp' => '(022) 66221926',
-                'fax' => '(022) 66229082',
-                'web' => 'https://sukabumikota.bps.go.id/',
-                'email' => 'bps3272@bps.go.id',
-            ],
         ]);
 
         User::insert([
-            // BPS Kabupaten Bogor
-            [
-                'id' => '196408141987021002',
-                'name' => 'Mariyanti, S.Si, M.M',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'role' => 'KPA',
-                'satker_id' => '3201'
-            ],
-            [
-                'id' => '198611262009021002',
-                'name' => 'Anlin Pradana, S.E.',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'role' => 'BP',
-                'satker_id' => '3201'
-
-            ],
-            [
-                'id' => '200107090100005167',
-                'name' => 'Muhammad Arya Septa Kovitra',
-                'role' => 'A',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password],
-                'satker_id' => '3201'
-            ],
-            [
-                'id' => '198408142006041007',
-                'name' => 'Nelson Samosir, S.Stat, M.H',
-                'role' => 'PPK',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password],
-                'satker_id' => '3201'
-            ],
-            [
-                'id' => '198111122009021105',
-                'name' => 'Anas Rulloh Alamsyah',
-                'role' => 'PPK',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password],
-                'satker_id' => '3201'
-            ],
-
-
             // BPS Jabar
             [
                 'id' => '196408141987021001',
@@ -155,7 +127,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Eko Dwi Mulyono, S.SI, M.M',
                 'role' => 'A',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password],
-                'satker_id' => '3272'
+                'satker_id' => '3200'
             ],
             [
                 'id' => '198806162008012001',
@@ -201,20 +173,7 @@ class DatabaseSeeder extends Seeder
                 'tanggal_surat_tugas' => '2023-04-26',
             ],
 
-            // BPS Kabupaten Bogor
 
-            [
-                'user_id' => '198408142006041007',
-                'program' => 'Dukman',
-                'no_surat_tugas' => '0426001/3100/PB',
-                'tanggal_surat_tugas' => '2023-01-01',
-            ],
-            [
-                'user_id' => '198111122009021105',
-                'program' => 'PPIS',
-                'no_surat_tugas' => '0426002/3200/BP',
-                'tanggal_surat_tugas' => '2023-02-02',
-            ],
 
         ]);
         Bank::insert([

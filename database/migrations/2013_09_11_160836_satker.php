@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_satker');
             $table->string('alamat');
             $table->string('no_telp', 30);
-            $table->string('fax', 15);
+            $table->string('fax', 30);
             $table->string('web');
             $table->string('email');
             $table->timestamps();

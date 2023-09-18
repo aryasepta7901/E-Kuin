@@ -481,7 +481,7 @@ class KontrakKerjaController extends Controller
         $phpWord->setValues([
             'Nama_Satker' => strtoupper($kontrak->satker->nama_satker),
             'nama_satker' => $kontrak->satker->nama_satker,
-            'alamat' => $kontrak->satker->alamat,
+            'alamat_bps' => $kontrak->satker->alamat,
             'no_telp' => $kontrak->satker->no_telp,
             'fax' => $kontrak->satker->fax,
             'web' => $kontrak->satker->web,
