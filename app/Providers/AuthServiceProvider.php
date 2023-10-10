@@ -34,5 +34,8 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //
+        Gate::define('superAdmin', function (User $user) {
+            return $user->id === '198702202010121004';
+        });
     }
 }

@@ -30,9 +30,7 @@ class KontrakKerjaController extends Controller
         return view('kontrak.index', [
             'title' => 'kontrak Kerja',
             'kontrak' => Kontrak::where('satker_id', $satker_id)->get(),
-
             'pbj' => User::where('role', 'PBJ')->where('satker_id', $satker_id)->get(),
-
             'ppk' => User::where('role', 'PPK')->where('satker_id', $satker_id)->get(),
 
         ]);
@@ -52,6 +50,16 @@ class KontrakKerjaController extends Controller
         $inputData = $request->input('data');
         $data = Vendor::where('penyedia_jasa', 'like', '%' . $inputData . '%')->limit(5)->get();
         return response()->json($data);
+    }
+    public function allData()
+    {
+        return view('kontrak.all', [
+            'title' => 'All Data Kontrak Kerja',
+            'kontrak' => Kontrak::all(),
+            'pbj' => User::where('role', 'PBJ')->get(),
+            'ppk' => User::where('role', 'PPK')->get(),
+
+        ]);
     }
 
     /**
@@ -141,7 +149,7 @@ class KontrakKerjaController extends Controller
         return view('kontrak.show', [
             'master' => 'Kontrak Kerja',
             'link' => '/kontrak',
-            'title' => $kontrak->pekerjaan,
+            'title' => $kontrak->pekerjaan . ' (BPS ' . $kontrak->satker->nama_satker . ')',
             'kontrak' => $kontrak,
             'barang' => Barang::where('kontrak_id', $kontrak->id)->get(),
             'jadwal' => Jadwal::where('kontrak_id', $kontrak->id)->get(),

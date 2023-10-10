@@ -26,7 +26,16 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                                                     with font-awesome or any other icon font library -->
-
+                @can('superAdmin')
+                    <li class="nav-item">
+                        <a href="/allData" class="nav-link {{ Request::is('all*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-address-book"></i>
+                            <p>
+                                Semua Kontrak
+                            </p>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-item">
                     <a href="/kontrak" class="nav-link {{ Request::is('kontrak*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -35,6 +44,7 @@
                         </p>
                     </a>
                 </li>
+
                 {{-- PIC Satker --}}
                 @can('admin')
                     <li class="nav-item">
